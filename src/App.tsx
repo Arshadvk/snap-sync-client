@@ -22,6 +22,14 @@ const App = () => {
             {/*private routes */}
             <Route element={<RootLayout/>}>
             <Route index element={<Home/>}/>
+            <Route path="/explore" />
+            <Route path="/saved" />
+            <Route path="/all-users" />
+            <Route path="/create-post" />
+            <Route path="/update-post/:id" />
+            <Route path="/posts/:id" />
+            <Route path="/profile/:id" />
+            <Route path="/update-profile/:id" />
             </Route>
 
         </Routes>
