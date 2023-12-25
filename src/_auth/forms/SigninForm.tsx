@@ -95,9 +95,12 @@ const SigninForm = () => {
                 : ("Sign In")
             }</Button>
           <p className='text-small-regular text-light-2 text-center mt-2'>Don't have an account? <Link to="/sign-up" className='text-primary-500 text-small-smeibold ml-1'>Sign up</Link></p>
+          <p className='text-light-3 small-medium md:base-regular mt-2 text-center'>or</p>
+          <Button className='shad-button'><img src="/assets/icons/google.svg" alt="" className='p-2' /> Continue with Google </Button>
         </form>
       </div>
     </Form>
+    
   )
 }
 
