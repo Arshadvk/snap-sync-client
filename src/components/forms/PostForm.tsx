@@ -44,8 +44,8 @@ const PostForm = ({ post }: PostFormProps) => {
                 toast({
                     title: "Please try again"
                 })
-                navigate('/')
             }
+            navigate('/')
             console.log(values)
         }catch(error){
             console.log(error);
@@ -73,7 +73,7 @@ const PostForm = ({ post }: PostFormProps) => {
 
                 <FormField
                     control={form.control}
-                    name="caption"
+                    name="file"
                     render={({ field }) => (
                         <FormItem>
                             <FormLabel className="shad-form_label">Add Photos</FormLabel>
