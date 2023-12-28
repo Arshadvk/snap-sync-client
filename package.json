@@ -23,7 +23,9 @@
     "react-dom": "^18.2.0",
     "react-dropzone": "^14.2.3",
     "react-hook-form": "^7.49.2",
+    "react-intersection-observer": "^9.5.3",
     "react-router-dom": "^6.21.0",
+    "sweetalert2": "^11.10.2",
     "tailwind-merge": "^2.1.0",
     "zod": "^3.22.4"
   },

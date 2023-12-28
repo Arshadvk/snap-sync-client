@@ -210,10 +210,12 @@ export async function deleteFile(fileId: string) {
 
 
 export async function getRecentPosts() {
+
+  const queries : any[] = [Query.orderDesc("$createdAt"), Query.limit(9)]
   const posts = await databases.listDocuments(
     appwriteConfig.databaseId,
     appwriteConfig.postCollectionId,
-    [Query.orderDesc("$createdAt"), Query.limit(20)]
+    queries
   )
 
   if (!posts) throw Error;
@@ -346,6 +348,43 @@ export async function deletePost(postId : string , imageId :string) {
       postId
     )
     return {status : "ok"}
+  } catch (error) {
+    console.log(error);
+    
+  }
+}
+
+export async function getInfinitePosts({pageParam}:{pageParam : number}) {
+  const queries : any[] = [Query.orderDesc("$updatedAt") , Query.limit(9)]
+  if(pageParam){
+    queries.push(Query.cursorAfter(pageParam.toString()))
+  }
+
+  try {
+    const posts = await databases.listDocuments(
+      appwriteConfig.databaseId ,
+      appwriteConfig.postCollectionId ,
+      queries
+    )
+    if(!posts) throw Error
+
+    return posts;
+  } catch (error) {
+    console.log(error);
+    
+  }
+}
+
+export async function searchPosts(searchTerm : string) {
+  try {
+    const posts = await databases.listDocuments(
+      appwriteConfig.databaseId ,
+      appwriteConfig.postCollectionId ,
+      [Query.search("caption" , searchTerm) ]
+    )
+    if(!posts) throw Error
+
+    return posts;
   } catch (error) {
     console.log(error);
     
