@@ -210,10 +210,12 @@ export async function deleteFile(fileId: string) {
 
 
 export async function getRecentPosts() {
+
+  const queries : any[] = [Query.orderDesc("$createdAt"), Query.limit(9)]
   const posts = await databases.listDocuments(
     appwriteConfig.databaseId,
     appwriteConfig.postCollectionId,
-    [Query.orderDesc("$createdAt"), Query.limit(20)]
+    queries
   )
 
   if (!posts) throw Error;
@@ -353,7 +355,7 @@ export async function deletePost(postId : string , imageId :string) {
 }
 
 export async function getInfinitePosts({pageParam}:{pageParam : number}) {
-  const queries : any[] = [Query.orderDesc("$updatedAt") , Query.limit(10)]
+  const queries : any[] = [Query.orderDesc("$updatedAt") , Query.limit(9)]
   if(pageParam){
     queries.push(Query.cursorAfter(pageParam.toString()))
   }

@@ -6,16 +6,34 @@ import { useUserContext } from '@/context/AuthContext'
 import { sidebarLinks } from '@/constants'
 import { link } from 'fs'
 import { INavLink } from '@/types'
+import Swal from 'sweetalert2'
 
 
 const LeftSidebar = () => {
-    const {pathname } = useLocation()
+    const { pathname } = useLocation()
     const { mutate: signOut, isSuccess } = useSignOutAccount()
     const navigate = useNavigate()
     const { user } = useUserContext()
     useEffect(() => {
         if (isSuccess) navigate(0)
     }, [isSuccess])
+
+    const handleSignout = () => {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: 'You are about to sign out.',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, sign me out!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // User confirmed, perform sign out
+                signOut();
+            }
+        });
+    };
     return (
 
         <nav className='leftsidebar'>
@@ -38,20 +56,20 @@ const LeftSidebar = () => {
                     {sidebarLinks.map((link: INavLink) => {
                         const isActive = pathname === link.route;
                         return (
-                        <li key={link.label} className={`leftsidebar-link group ${isActive && "bg-primary-500"}`}>
-                            <NavLink to={link.route} className="flex gap-4 items-center p-4">
-                               <img src={link.imgURL} alt={link.label} className={`group-hover:invert-white ${isActive && "invert-white"}`} /> 
-                               {link.label}
-                            </NavLink>
-                        </li>
+                            <li key={link.label} className={`leftsidebar-link group ${isActive && "bg-primary-500"}`}>
+                                <NavLink to={link.route} className="flex gap-4 items-center p-4">
+                                    <img src={link.imgURL} alt={link.label} className={`group-hover:invert-white ${isActive && "invert-white"}`} />
+                                    {link.label}
+                                </NavLink>
+                            </li>
                         )
                     })}
                 </ul>
             </div>
-            <Button variant={"ghost"} className='shad-button_ghost' onClick={()=>signOut()}>
-                    <img src="/assets/icons/logout.svg" alt=""  />
-                    <p className='small-medium lg:base-medium'> Logout</p>
-                </Button> 
+            <Button variant={"ghost"} className='shad-button_ghost' onClick={() => handleSignout()}>
+                <img src="/assets/icons/logout.svg" alt="" />
+                <p className='small-medium lg:base-medium'> Logout</p>
+            </Button>
         </nav>
     )
 }
