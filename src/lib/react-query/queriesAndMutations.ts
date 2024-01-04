@@ -64,6 +64,7 @@ export const useGetPosts = () =>{
     }
   })
 }
+
 export const useLikePost = () => {
   const queryClient = useQueryClient()
 

@@ -48,8 +48,7 @@ const SigninForm = () => {
     console.log({isLoggedIn})
     if(isLoggedIn){
       form.reset()
-      console.log("navigati")
-      navigate('/')
+      navigate("/")
     }else{
       toast({title: "Sign up failed . Please try again"})
     }
@@ -89,7 +88,6 @@ const SigninForm = () => {
             )}
           />
           <Button type="submit" className='shad-button_primary'>
-
             {
               isUserLoading ? (<div className='flex-center gap-2'> <Loader /> Loading...</div>)
                 : ("Sign In")

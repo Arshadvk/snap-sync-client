@@ -4,7 +4,6 @@ import { useForm } from "react-hook-form"
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -23,11 +22,11 @@ const SignupForm = () => {
 
 
   const { toast } = useToast()
-  const {checkAuthUser , isLoading : isUserLoading} = useUserContext()
+  const {checkAuthUser } = useUserContext()
   const navigate = useNavigate()
 
   const { mutateAsync: createUserAccount, isPending: isCreatingUser } = useCreateUserAccount()
-  const { mutateAsync: signInAccount, isPending: isSigningIn } = useSignInAccount()
+  const { mutateAsync: signInAccount } = useSignInAccount()
   // 1. Define your form.
   const form = useForm<z.infer<typeof SignupValidation>>({
     resolver: zodResolver(SignupValidation),
