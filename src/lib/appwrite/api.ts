@@ -211,7 +211,7 @@ export async function deleteFile(fileId: string) {
 
 export async function getRecentPosts() {
 
-  const queries : any[] = [Query.orderDesc("$createdAt"), Query.limit(9)]
+  const queries : any[] = [Query.orderDesc("$createdAt"), Query.limit(20)]
   const posts = await databases.listDocuments(
     appwriteConfig.databaseId,
     appwriteConfig.postCollectionId,
