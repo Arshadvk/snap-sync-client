@@ -1,8 +1,8 @@
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { useQuery, useMutation, useQueryClient, useInfiniteQuery } from "@tanstack/react-query";
 import { QUERY_KEYS } from "@/lib/react-query/queryKeys";
 import {
   createUserAccount, signInAccount, signOutAccount, createPost, getRecentPosts, likePost, savePost,
-  deleteSavedPost, getCurrentUser, getPostId, updatePost, deletePost,  searchPosts,
+  deleteSavedPost, getCurrentUser, getPostId, updatePost, deletePost,  searchPosts, getInfinitePosts,
 } from "@/lib/appwrite/api";
 import { INewPost, INewUser, IUpdatePost } from "@/types";
 
@@ -52,18 +52,20 @@ export const useGetRecentPosts = () => {
   })
 }
 
-// export const useGetPosts = () =>{
-//   return useInfiniteQuery({
-//     queryKey : [QUERY_KEYS.GET_INFINITE_POSTS],
-//     queryFn: getInfinitePosts ,
-//     getNextPageParam : (lastPage) =>{
-//       if(lastPage && lastPage?.documents.length === 0) return null;
-//       const lastId = lastPage?.documents[lastPage?.documents.length -1].$id
+export const useGetPosts = () => {
+  return useInfiniteQuery({
+    queryKey: [QUERY_KEYS.GET_INFINITE_POSTS],
+    queryFn: getInfinitePosts,
+    getNextPageParam: (lastPage) => {
+      if (!lastPage || lastPage.documents.length === 0) return null;
+      const lastId = lastPage.documents[lastPage.documents.length - 1].$id;
+      // Ensure that the value returned is a number
+      return lastId ? parseInt(lastId, 10) : null;
+    },
+    initialPageParam: 1// Provide an initial page value
+  });
+};
 
-//       return lastId
-//     }
-//   })
-// }
 
 export const useLikePost = () => {
   const queryClient = useQueryClient()
